@@ -1,0 +1,113 @@
+/* 超出元素的多余文字不换行，将多余部分替换成... */
+.overflow() {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+/* 多行文字省略 */
+.multi-overflow(@line) {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    line-clamp: @line;
+    -webkit-line-clamp: @line;
+    word-break: break-all;
+}
+/* 背景色渐变 */
+.gradient(@colorStar, @colorEnd, @direction:to right, @starX:0%, @starY:100%, @type:linear, @clip:background) {
+    background: ~"@{type}-gradient(@{direction}, @{colorStar} @{starX}, @{colorEnd} @{starY}) no-repeat";
+    & when (@clip=text) {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+    }
+}
+
+/* 对齐 */
+.align(@position, @display:flex, @direction:1) {
+    display: @display;
+    & when (@position=v-center), (@position=center) {
+        align-items: center;
+    }
+    & when (@position=h-center), (@position=center) {
+        justify-content: center;
+    }
+    & when (@position=center) {
+        flex-wrap: wrap;
+        align-content: center;
+    }
+    & when (@position=top) {
+        align-items: flex-start;
+    }
+    & when (@position=bottom) {
+        align-items: flex-end;
+    }
+    & when (@position=left) {
+        justify-content: flex-start;
+    }
+    & when (@position=right) {
+        justify-content: flex-end;
+    }
+    & when (@position=h-space-between), (@position=v-space-between) {
+        justify-content: space-between;
+    }
+    & when (@position=h-space-around), (@position=v-space-around) {
+        justify-content: space-around;
+    }
+    & when (@position=v-space-between), (@position=v-space-around) {
+        flex-direction: column;
+    }
+    & when (iskeyword(@direction)) {
+        flex-direction: @direction;
+    }
+}
+
+/* 悬浮对齐 */
+.absolute(@position) {
+    position: absolute;
+    margin: auto;
+    & when (@position=c), (@position=cm) {
+        left: 0;
+        right: 0;
+    }
+    & when (@position=m), (@position=cm) {
+        top: 0;
+        bottom: 0;
+    }
+}
+
+/* 清除浮动 */
+.clear-float() {
+    zoom: 1;
+    &::after {
+        display: block;
+        content: "";
+        height: 0;
+        visibility: hidden;
+        clear: both;
+    }
+}
+
+/* 阴影 */
+.shadow(@h, @v, @blur:0, @color) {
+    filter: drop-shadow(@h @v @blur @color);
+}
+
+/* 形状遮罩 */
+.mask(@image, @size:100%) {
+    -webkit-mask-image: url("@{image}");
+    -webkit-mask-origin: content-box;
+    -webkit-mask-size: @size;
+}
+
+/** 添加文字间距并居中 */
+.spacing-center(@value) {
+    letter-spacing: @value;
+    text-indent: @value;
+    text-align: center;
+}
+
+.text-border(@width, @color) {
+    text-shadow: @color @width 0 0, @color 0 @width 0, @color -@width 0 0, @color 0 -@width 0;
+}
