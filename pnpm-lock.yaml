@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  '@pecasha/util':
+    specifier: ^2.1.4
+    version: 2.1.4
+
 devDependencies:
   '@sveltejs/adapter-static':
     specifier: ^3.0.1
@@ -303,6 +308,41 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
     dev: true
+
+  /@pecasha/util-browser@2.1.4:
+    resolution: {integrity: sha512-/oEnsmvW4R0JlbJxTIbGUoQ+GQkJMtKaGM81u1/P7kPBf14T40rmlPVSncIEDD6TY7Je3/svQ03ZMAtLPvUJ/A==, tarball: https://npm.pkg.github.com/download/@pecasha/util-browser/2.1.4/01d3d33483f2b9b0c30bc710e3777d48743402ce}
+    dev: false
+
+  /@pecasha/util-common@2.1.3:
+    resolution: {integrity: sha512-qQHujHh1AKAQl9mrld0WkQREHXrsI06LniXz1xuby4mOX/rD5rztYAgNcACrmNQHrJuCF5nBPSc5cMNe255CkA==, tarball: https://npm.pkg.github.com/download/@pecasha/util-common/2.1.3/bc24bffd5c8b31ddc0a8ff1cd6eef974758a6f71}
+    dev: false
+
+  /@pecasha/util-crypto@2.1.3:
+    resolution: {integrity: sha512-u1Zu53NcITlxt9U1rX51R8c+b5B5le9PRru4UaIErS/ewfaDQ7EjNop1GAv3WPW9IYYoet9VCxvWpPTb/2Hy2Q==, tarball: https://npm.pkg.github.com/download/@pecasha/util-crypto/2.1.3/f5c46e316750396d8419de3456410ec43e37af9d}
+    dev: false
+
+  /@pecasha/util-decorator@2.1.3:
+    resolution: {integrity: sha512-wuGjvNDcZqk6i4sz4mzHQ5mb44Cb3D6+g54avcwHu1gjjGRS/hlEBfDPsAfbZJasotWqc+BtNbZ5gXwzsapUuw==, tarball: https://npm.pkg.github.com/download/@pecasha/util-decorator/2.1.3/ac0c4fbe40035b2798c17ded3336c13dbf672b93}
+    dev: false
+
+  /@pecasha/util-network@2.1.3:
+    resolution: {integrity: sha512-xosdg5LJlLzw1YnPOAT7VJsOVVyNqNe/67372IYc6/b0NgJLKt8eathR115QRH0GJ9bcBOdajkDE7xkYbOudvw==, tarball: https://npm.pkg.github.com/download/@pecasha/util-network/2.1.3/700ab51bc6d60849bab4bf27a5c90ae0a308cb61}
+    dev: false
+
+  /@pecasha/util-validation@2.1.3:
+    resolution: {integrity: sha512-xHxYsddzKSyShEY89Fd6nXfxJIRXiCHdQvQ14VehTgJCUi0BbPXxrvq+Uv+HxwUrnk5pNiV884oFAcc0xPSdPQ==, tarball: https://npm.pkg.github.com/download/@pecasha/util-validation/2.1.3/53d4668aeb4eac4e3351743c1538db6fa9219fbb}
+    dev: false
+
+  /@pecasha/util@2.1.4:
+    resolution: {integrity: sha512-mEOXbWDykKZlar4/vWtzPa5M40tA4N0En7YFoqC3MInwaoGAwjCoq3iWyGChCAOtfjTCq2gFCyvczNpQzp7AFg==, tarball: https://npm.pkg.github.com/download/@pecasha/util/2.1.4/daedce279b428e9997a17a3fb4cfd6c99e249533}
+    dependencies:
+      '@pecasha/util-browser': 2.1.4
+      '@pecasha/util-common': 2.1.3
+      '@pecasha/util-crypto': 2.1.3
+      '@pecasha/util-decorator': 2.1.3
+      '@pecasha/util-network': 2.1.3
+      '@pecasha/util-validation': 2.1.3
+    dev: false
 
   /@polka/url@1.0.0-next.25:
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}

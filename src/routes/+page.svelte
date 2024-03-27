@@ -21,11 +21,21 @@
 </div>
 
 <script lang="ts">
+    import { onMount } from "svelte";
+
+    import { browserImageCacheLoaderQueue } from "@pecasha/util";
+
     import Stamp, { type StampItem } from "@/modules/stamp";
 
     const stamp = new Stamp();
 
     let list: StampItem[] = stamp.data;
+
+    onMount(async () => {
+        await browserImageCacheLoaderQueue(list.map(item => `https://assets.stamp.pecasha.com/images/stamps/${item.img}.png`));
+        document.querySelector(".page-loading")!.remove();
+        document.body.classList.remove("loading");
+    });
 </script>
 
 <style lang="less">
@@ -52,7 +62,7 @@
     :global(body) {
         width: 100%;
         min-height: 100%;
-        background-color: #f8f8f9;
+        background-color: #f2f2f2;
     }
     :global(body) {
         min-width: 768px;
@@ -78,13 +88,13 @@
     .list {
         width: 100%;
         column-count: 6;
-        column-gap: 10px;
+        column-gap: 20px;
         > li {
             width: 100%;
             padding: 20px;
             overflow: hidden;
-            margin-bottom: 10px;
-            border-radius: 4px;
+            margin-bottom: 20px;
+            border-radius: 10px;
             background-color: #fff;
             border: 1px solid #e4e7ed;
             color: #303133;
