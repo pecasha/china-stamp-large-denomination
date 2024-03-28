@@ -19,3 +19,5 @@ vite.config.ts.timestamp-*
 *.sw?
 
 *.tsbuildinfo
+
+.env.development

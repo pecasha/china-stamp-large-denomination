@@ -1,8 +1,18 @@
 <div class="page">
+    <header>
+        <div class="logo">
+            <img src="/favicon.png"
+                 alt="中国大面值邮票图鉴">
+            <section>
+                <h1>中国大面值邮票图鉴</h1>
+                <p>只收录有荧光编码并且面值大于等于 2元 的邮票，不包含小型张 <QuestionCircleOutline class="cursor-pointer" size="sm"/><Tooltip type="auto" placement="bottom">从 2002年9月7日 发行的「雁荡山」特种邮票之后，所有的邮票都使用了荧光喷码</Tooltip></p>
+            </section>
+        </div>
+    </header>
     <ul class="list">
         {#each list as item}
             <li>
-                <img src="https://assets.stamp.pecasha.com/images/stamps/{item.img}.png"
+                <img src="{stampImageUrlPrefix}{item.img}.png"
                      alt={item.name||item.title}>
                 <h1 class="title">{item.title}</h1>
                 {#if item.number||item.name}
@@ -26,13 +36,19 @@
     import { browserImageCacheLoaderQueue } from "@pecasha/util";
 
     import Stamp, { type StampItem } from "@/modules/stamp";
+    import { PUBLIC_STAMP_IMAGE_URL_PREFIX } from "$env/static/public";
+
+    import { Tooltip } from "flowbite-svelte";
+
+    import { QuestionCircleOutline } from "flowbite-svelte-icons";
 
     const stamp = new Stamp();
 
     let list: StampItem[] = stamp.data;
+    const stampImageUrlPrefix = PUBLIC_STAMP_IMAGE_URL_PREFIX ?? "https://assets.stamp.pecasha.com/images/stamps/";
 
     onMount(async () => {
-        await browserImageCacheLoaderQueue(list.map(item => `https://assets.stamp.pecasha.com/images/stamps/${item.img}.png`));
+        await browserImageCacheLoaderQueue(list.map(item => `${stampImageUrlPrefix}${item.img}.png`));
         document.querySelector(".page-loading")!.remove();
         document.body.classList.remove("loading");
     });
@@ -83,11 +99,56 @@
     .page {
         position: relative;
         width: 100%;
-        padding: 20px;
+    }
+
+    header {
+        .align(v-center);
+        .align(h-space-between);
+        z-index: 999;
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 80px;
+        padding: 15px;
+        border-bottom: 1px solid rgba(0,0,0,.1);
+        background-color: rgba(255,255,255,.8);
+        backdrop-filter: blur(10px);
+        .logo {
+            .align(v-center);
+            flex: 1;
+            width: 0;
+            height: 100%;
+            user-select: none;
+            > img {
+                height: 100%;
+            }
+            > section {
+                .align(h-space-between, flex, column);
+                height: 100%;
+                padding: 2px 0;
+                margin-left: 10px;
+                margin-right: 20px;
+                > h1 {
+                    .align(v-center, inline-flex);
+                    width: 100%;
+                    column-gap: 5px;
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+                > p {
+                    .align(v-center, inline-flex);
+                    width: 100%;
+                    column-gap: 4px;
+                    font-size: 12px;
+                    color: #999;
+                }
+            }
+        }
     }
 
     .list {
         width: 100%;
+        padding: 20px;
         column-count: 6;
         column-gap: 20px;
         > li {
@@ -107,6 +168,7 @@
             > img {
                 width: 100%;
                 margin-bottom: 20px;
+                filter: drop-shadow(0 0 2px rgba(0,0,0,.25));
             }
             .title {
                 width: 100%;
@@ -145,48 +207,40 @@
     }
 
     @media screen and (max-width: 299px) {
-        .page {
-            padding: 10px;
-        }
         .list {
             column-count: 1;
             column-gap: 10px;
+            padding: 10px;
             > li {
                 margin-bottom: 10px;
             }
         }
     }
     @media screen and (min-width: 300px) {
-        .page {
-            padding: 10px;
-        }
         .list {
             column-count: 2;
             column-gap: 10px;
+            padding: 10px;
             > li {
                 margin-bottom: 10px;
             }
         }
     }
     @media screen and (min-width: 600px) {
-        .page {
-            padding: 10px;
-        }
         .list {
             column-count: 3;
             column-gap: 10px;
+            padding: 10px;
             > li {
                 margin-bottom: 10px;
             }
         }
     }
     @media screen and (min-width: 800px) {
-        .page {
-            padding: 15px;
-        }
         .list {
             column-count: 4;
             column-gap: 15px;
+            padding: 15px;
             > li {
                 margin-bottom: 15px;
             }
