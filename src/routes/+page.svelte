@@ -65,7 +65,7 @@
         background-color: #f2f2f2;
     }
     :global(body) {
-        min-width: 768px;
+        min-width: 299px;
         overflow-x: hidden;
     }
     :global(::-webkit-scrollbar) {
@@ -85,6 +85,7 @@
         width: 100%;
         padding: 20px;
     }
+
     .list {
         width: 100%;
         column-count: 6;
@@ -114,25 +115,21 @@
                 font-weight: bold;
             }
             .name {
-                display: flex;
                 width: 100%;
-                height: 20px;
+                min-height: 20px;
                 margin-top: 6px;
                 > p {
-                    .align(v-center);
-                    flex: 1;
-                    width: 0;
-                    height: 100%;
-                    line-height: 1;
-                    margin-left: 5px;
+                    display: inline;
+                    min-height: 20px;
+                    line-height: 20px;
                     font-size: 12px;
                     color: #999;
                 }
             }
             .tag {
                 display: inline-flex;
-                padding: 0 7px;
-                height: 20px;
+                padding: 0 5px;
+                height: 16px;
                 font-size: 12px;
                 justify-content: center;
                 align-items: center;
@@ -144,6 +141,80 @@
                 border: 1px solid #e9e9eb;
                 color: #909399;
             }
+        }
+    }
+
+    @media screen and (max-width: 299px) {
+        .page {
+            padding: 10px;
+        }
+        .list {
+            column-count: 1;
+            column-gap: 10px;
+            > li {
+                margin-bottom: 10px;
+            }
+        }
+    }
+    @media screen and (min-width: 300px) {
+        .page {
+            padding: 10px;
+        }
+        .list {
+            column-count: 2;
+            column-gap: 10px;
+            > li {
+                margin-bottom: 10px;
+            }
+        }
+    }
+    @media screen and (min-width: 600px) {
+        .page {
+            padding: 10px;
+        }
+        .list {
+            column-count: 3;
+            column-gap: 10px;
+            > li {
+                margin-bottom: 10px;
+            }
+        }
+    }
+    @media screen and (min-width: 800px) {
+        .page {
+            padding: 15px;
+        }
+        .list {
+            column-count: 4;
+            column-gap: 15px;
+            > li {
+                margin-bottom: 15px;
+            }
+        }
+    }
+    @media screen and (min-width: 1000px) {
+        .list {
+            column-count: 5;
+        }
+    }
+    @media screen and (min-width: 1200px) {
+        .list {
+            column-count: 6;
+        }
+    }
+    @media screen and (min-width: 1600px) {
+        .list {
+            column-count: 7;
+        }
+    }
+    @media screen and (min-width: 1800px) {
+        .list {
+            column-count: 8;
+        }
+    }
+    @media screen and (min-width: 2000px) {
+        .list {
+            column-count: 9;
         }
     }
 </style>
