@@ -14,45 +14,9 @@
     %sveltekit.head%
 </head>
 
-<body class="loading"
-      data-sveltekit-preload-data="hover">
+<body class="loading" data-sveltekit-preload-data="hover">
     <div style="display: contents">%sveltekit.body%</div>
     <div class="page-loading"></div>
-    <style>
-        body.loading {
-            overflow: hidden;
-        }
-        .page-loading {
-            z-index: 100;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #f2f2f2;
-        }
-        .page-loading::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 100;
-            width: 60px;
-            margin: auto;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background: radial-gradient(farthest-side, #d6204b 94%, #0000) top/8px 8px no-repeat, conic-gradient(#0000 30%, #d6204b);
-            -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
-            animation: rotate 1s infinite linear;
-        }
-        @keyframes rotate {
-            100% {
-                transform: rotate(1turn);
-            }
-        }
-    </style>
+    <style>body.loading{overflow:hidden;}.page-loading{z-index:100;position:fixed;top:0;left:0;width:100vw;height:100vh;overflow:hidden;background-color:#f2f2f2;}.page-loading::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;z-index:100;width:60px;margin:auto;aspect-ratio:1;border-radius:50%;background:radial-gradient(farthest-side,#d6204b 94%,#0000) top/8px 8px no-repeat,conic-gradient(#0000 30%,#d6204b);-webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);animation:rotate 1s infinite linear;}@keyframes rotate{100%{transform:rotate(1turn);}}</style>
 </body>
 </html>
