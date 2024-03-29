@@ -29,6 +29,14 @@
                         {/if}
                     </div>
                 {/if}
+                <div class="denomination">
+                    <b>{item.value}</b>
+                    <p title="尺寸单位: 毫米"><RulerCombinedOutline size="sm"/>{item.size}</p>
+                </div>
+                <div class="type">
+                    <span class="tag {item.type}">{item.type}</span>
+                    <p>{item.date}</p>
+                </div>
             </li>
         {/each}
     </ul>
@@ -42,7 +50,10 @@
 
     import { Tooltip } from "flowbite-svelte";
 
-    import { QuestionCircleOutline } from "flowbite-svelte-icons";
+    import {
+        QuestionCircleOutline,
+        RulerCombinedOutline
+    } from "flowbite-svelte-icons";
 
     const stamp = new Stamp();
 
@@ -101,6 +112,7 @@
     }
     :global(img) {
         display: block;
+        user-select: none;
     }
 
     .page {
@@ -238,11 +250,76 @@
                 background-color: #f4f4f5;
                 border: 1px solid #e9e9eb;
                 color: #909399;
+                user-select: none;
+            }
+            .denomination {
+                .align(v-center);
+                .align(h-space-between);
+                width: 100%;
+                padding: 10px 0;
+                margin-top: 10px;
+                border-top: 1px solid #eee;
+                user-select: none;
+                > b {
+                    font-size: 20px;
+                    color: #f08282;
+                    &::before {
+                        content: "￥";
+                    }
+                }
+                > p {
+                    .align(v-center, inline-flex);
+                    height: 100%;
+                    column-gap: 2px;
+                    font-size: 15px;
+                    color: #999;
+                }
+            }
+            .type {
+                .align(bottom);
+                .align(h-space-between);
+                width: 100%;
+                height: 22px;
+                user-select: none;
+                .tag {
+                    height: 22px;
+                    padding: 0 6px;
+                    border: 0;
+                    color: #fff;
+                    &.普通邮票 {
+                        background-color: #409eff;
+                    }
+                    &.特种邮票 {
+                        background-color: #67c23a;
+                    }
+                    &.纪念邮票 {
+                        background-color: #e6a23c;
+                    }
+                    &.特别发行邮票 {
+                        background-color: #983680;
+                    }
+                    &.贺卡专用邮票 {
+                        background-color: #12aa9c;
+                    }
+                    &.个性化服务专用邮票 {
+                        background-color: #d85916;
+                    }
+                    &.贺年专用邮票 {
+                        background-color: #f56c6c;
+                    }
+                }
+                > p {
+                    padding-bottom: 2px;
+                    line-height: 1;
+                    text-decoration: underline;
+                    font-size: 12px;
+                    color: #999;
+                }
             }
         }
     }
 
-    @media screen and (max-width: 299px) {
+    @media screen and   (max-width: 299px) {
         .list {
             column-count: 1;
             column-gap: 10px;
