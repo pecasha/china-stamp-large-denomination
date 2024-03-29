@@ -5,7 +5,7 @@
                  alt="中国大面值邮票图鉴">
             <section>
                 <h1>中国大面值邮票图鉴</h1>
-                <p>只收录有荧光编码并且面值大于等于 2元 的邮票，不包含小型张 <QuestionCircleOutline class="cursor-pointer" size="sm"/><Tooltip type="auto" placement="bottom">从 2002年9月7日 发行的「雁荡山」特种邮票之后，所有的邮票都使用了荧光喷码</Tooltip></p>
+                <p>只收录带有荧光编码并且面值大于等于 2元 的邮票，不包含小型张 <QuestionCircleOutline class="cursor-pointer" size="sm"/><Tooltip type="auto" placement="bottom">从 2002年9月7日 发行的「雁荡山」特种邮票之后，所有的邮票都使用了荧光喷码</Tooltip></p>
             </section>
         </div>
     </header>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="type">
                     <span class="tag {item.type}">{item.type}</span>
-                    <p>{item.date}</p>
+                    <p title="发行时间">{item.date}</p>
                 </div>
             </li>
         {/each}
@@ -45,8 +45,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
 
-    import Stamp, { type StampItem } from "@/modules/stamp";
     import { PUBLIC_STAMP_IMAGE_URL_PREFIX } from "$env/static/public";
+
+    import Stamp, { type StampItem } from "@/modules/stamp";
 
     import { Tooltip } from "flowbite-svelte";
 
@@ -55,12 +56,12 @@
         RulerCombinedOutline
     } from "flowbite-svelte-icons";
 
-    const stamp = new Stamp();
-
-    let list: StampItem[] = stamp.data;
     const stampImageUrlPrefix = PUBLIC_STAMP_IMAGE_URL_PREFIX ?? "https://assets.stamp.pecasha.com/images/stamps/";
 
     const imgEls: HTMLImageElement[] = [];
+
+    const stamp = new Stamp();
+    let list: StampItem[] = stamp.data;
 
     onMount(() => {
         for(const img of imgEls) {
@@ -110,6 +111,10 @@
         border-radius: 5px;
         background-color: rgba(0,0,0,.3);
     }
+    :global(::selection) {
+        background-color: #bbb;
+        color: #fff;
+    }
     :global(img) {
         display: block;
         user-select: none;
@@ -158,15 +163,17 @@
                     font-size: 16px;
                 }
                 > p {
-                    .align(v-center);
                     position: relative;
-                    will-change: contents;
                     width: 100%;
-                    height: 18px;
-                    line-height: 1;
+                    min-height: 16px;
+                    line-height: 16px;
                     column-gap: 4px;
                     font-size: 12px;
                     color: #999;
+                    :global(> svg) {
+                        display: inline-block;
+                        vertical-align: text-bottom;
+                    }
                 }
                 :global(> div),
                 :global(> div + p) {
@@ -207,7 +214,7 @@
             > img {
                 width: 100%;
                 overflow: hidden;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
                 border-radius: 5px;
                 background-color: #eee;
                 transition: ease 1s;
@@ -223,11 +230,13 @@
                 line-height: 26px;
                 font-size: 18px;
                 font-weight: bold;
+                cursor: default;
             }
             .name {
                 width: 100%;
                 min-height: 20px;
                 margin-top: 6px;
+                cursor: default;
                 > p {
                     display: inline;
                     min-height: 20px;
@@ -319,17 +328,35 @@
         }
     }
 
-    @media screen and   (max-width: 299px) {
+    @media screen and (max-width: 499px) {
+        :global(::-webkit-scrollbar) {
+            width: 6px;
+            height: 6px;
+            background-color: transparent;
+            backdrop-filter: none;
+        }
+        header {
+            height: 50px;
+            padding: 12px 20px;
+            .logo > section {
+                > p {
+                    display: none;
+                }
+            }
+        }
+        .scrollbar-border {
+            display: none;
+        }
         .list {
             column-count: 1;
-            column-gap: 10px;
-            padding: 10px;
+            column-gap: 15px;
+            padding: 15px;
             > li {
-                margin-bottom: 10px;
+                margin-bottom: 15px;
             }
         }
     }
-    @media screen and (min-width: 300px) {
+    @media screen and (min-width: 500px) {
         .list {
             column-count: 2;
             column-gap: 10px;
@@ -339,17 +366,17 @@
             }
         }
     }
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 730px) {
         .list {
             column-count: 3;
-            column-gap: 10px;
-            padding: 10px;
+            column-gap: 15px;
+            padding: 15px;
             > li {
-                margin-bottom: 10px;
+                margin-bottom: 15px;
             }
         }
     }
-    @media screen and (min-width: 800px) {
+    @media screen and (min-width: 965px) {
         .list {
             column-count: 4;
             column-gap: 15px;
@@ -359,27 +386,27 @@
             }
         }
     }
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 1230px) {
         .list {
             column-count: 5;
         }
     }
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1470px) {
         .list {
             column-count: 6;
         }
     }
-    @media screen and (min-width: 1600px) {
+    @media screen and (min-width: 1710px) {
         .list {
             column-count: 7;
         }
     }
-    @media screen and (min-width: 1800px) {
+    @media screen and (min-width: 1950px) {
         .list {
             column-count: 8;
         }
     }
-    @media screen and (min-width: 2000px) {
+    @media screen and (min-width: 2190px) {
         .list {
             column-count: 9;
         }
