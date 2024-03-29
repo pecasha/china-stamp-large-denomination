@@ -9,6 +9,8 @@ export interface StampItem {
     number?: string;
     /** 票面图片地址 */
     img: string;
+    /** 图片长宽比 */
+    imgRatio: number;
     /** 发行日期 */
     date: string;
     /** 面值 */

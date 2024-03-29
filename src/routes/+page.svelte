@@ -9,11 +9,15 @@
             </section>
         </div>
     </header>
+    <hr class="scrollbar-border">
     <ul class="list">
-        {#each list as item}
+        {#each list as item, index}
             <li>
                 <img src="{stampImageUrlPrefix}{item.img}.png"
-                     alt={item.name||item.title}>
+                     loading="lazy"
+                     bind:this={imgEls[index]}
+                     alt={item.name||item.title}
+                     style="aspect-ratio:{item.imgRatio}">
                 <h1 class="title">{item.title}</h1>
                 {#if item.number||item.name}
                     <div class="name">
@@ -33,8 +37,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
 
-    import { browserImageCacheLoaderQueue } from "@pecasha/util";
-
     import Stamp, { type StampItem } from "@/modules/stamp";
     import { PUBLIC_STAMP_IMAGE_URL_PREFIX } from "$env/static/public";
 
@@ -47,10 +49,18 @@
     let list: StampItem[] = stamp.data;
     const stampImageUrlPrefix = PUBLIC_STAMP_IMAGE_URL_PREFIX ?? "https://assets.stamp.pecasha.com/images/stamps/";
 
-    onMount(async () => {
-        await browserImageCacheLoaderQueue(list.map(item => `${stampImageUrlPrefix}${item.img}.png`));
-        document.querySelector(".page-loading")!.remove();
-        document.body.classList.remove("loading");
+    const imgEls: HTMLImageElement[] = [];
+
+    onMount(() => {
+        for(const img of imgEls) {
+            if(img.complete) {
+                img.classList.add("loaded");
+            } else {
+                img.addEventListener("load", () => {
+                    img.classList.add("loaded");
+                });
+            }
+        }
     });
 </script>
 
@@ -58,20 +68,15 @@
     @import "../styles/control.module";
 
     :global(*) {
-        margin: 0;
-        padding: 0;
         border: none;
         outline: 0;
-        list-style-type: none;
-        -webkit-text-size-adjust: none;
         zoom: 1;
         resize: none;
-        font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,"-apple-system",sans-serif;
-        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: none;
+        font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, "-apple-system", sans-serif;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
         -webkit-touch-callout: none;
     }
     :global(html),
@@ -87,10 +92,12 @@
     :global(::-webkit-scrollbar) {
         width: 10px;
         height: 10px;
+        background-color: rgba(255,255,255,.8);
+        backdrop-filter: blur(10px);
     }
     :global(::-webkit-scrollbar-thumb) {
-        border-radius: 8px;
-        background-color: rgba(0, 0, 0, .3);
+        border-radius: 5px;
+        background-color: rgba(0,0,0,.3);
     }
     :global(img) {
         display: block;
@@ -124,26 +131,46 @@
             }
             > section {
                 .align(h-space-between, flex, column);
+                flex: 1;
+                width: 0;
                 height: 100%;
                 padding: 2px 0;
                 margin-left: 10px;
                 margin-right: 20px;
                 > h1 {
-                    .align(v-center, inline-flex);
+                    .align(v-center);
                     width: 100%;
-                    column-gap: 5px;
+                    height: 24px;
+                    line-height: 1;
                     font-weight: bold;
                     font-size: 16px;
                 }
                 > p {
-                    .align(v-center, inline-flex);
+                    .align(v-center);
+                    position: relative;
+                    will-change: contents;
                     width: 100%;
+                    height: 18px;
+                    line-height: 1;
                     column-gap: 4px;
                     font-size: 12px;
                     color: #999;
                 }
+                :global(> div),
+                :global(> div + p) {
+                    display: none;
+                }
             }
         }
+    }
+
+    .scrollbar-border {
+        position: fixed;
+        width: 1px;
+        height: calc(100vh - 80px);
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,.1);
     }
 
     .list {
@@ -167,8 +194,17 @@
             }
             > img {
                 width: 100%;
+                overflow: hidden;
                 margin-bottom: 20px;
-                filter: drop-shadow(0 0 2px rgba(0,0,0,.25));
+                border-radius: 5px;
+                background-color: #eee;
+                transition: ease 1s;
+                &:global(.loaded) {
+                    will-change: contents;
+                    border-radius: 0;
+                    filter: drop-shadow(0 0 2px rgba(0,0,0,.25));
+                    background-color: transparent;
+                }
             }
             .title {
                 width: 100%;
