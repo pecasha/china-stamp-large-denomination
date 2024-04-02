@@ -1,0 +1,58 @@
+name: Upload Images to Tencent Cloud COS
+on:
+    push:
+        branches:
+            - main
+jobs:
+    check:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout Repository
+                uses: actions/checkout@v4
+            -   name: Get Changed Files
+                id: changed-files
+                uses: tj-actions/changed-files@v44
+                with:
+                    files: static/images/**
+        outputs:
+            changed: ${{ steps.changed-files.outputs.any_changed }}
+            files: ${{ steps.changed-files.outputs.all_changed_files }}
+    upload:
+        needs: check
+        if: ${{ needs.check.outputs.changed == 'true' }}
+        runs-on: ubuntu-latest
+        env:
+            SECRET_ID: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
+            SECRET_KEY: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
+            COS_BUCKET: ${{ secrets.TENCENT_CLOUD_COS_BUCKET }}
+            COS_REGION: ${{ secrets.TENCENT_CLOUD_COS_REGION }}
+            COS_PATH: ${{ secrets.TENCENT_CLOUD_COS_PATH }}
+            CDN_URL_PREFIX: ${{ vars.TENCENT_CLOUD_CDN_URL_PREFIX }}
+            CHANGED_FILES: ${{ needs.check.outputs.files }}
+        steps:
+            -   name: Checkout Repository
+                uses: actions/checkout@v4
+            -   name: Install coscmd
+                run: sudo pip install coscmd
+            -   name: Authenticate With Tencent Cloud COS
+                run: coscmd config -a $SECRET_ID -s $SECRET_KEY -b $COS_BUCKET -r $COS_REGION
+            -   name: Upload Changed Files to Tencent Cloud COS
+                run: |
+                    for file in $CHANGED_FILES; do
+                        coscmd upload $file $COS_PATH
+                    done
+            -   name: Install tccli
+                run: sudo pip install tccli
+            -   name: Authenticate With Tencent Cloud CLI
+                run: tccli configure set secretId $SECRET_ID secretKey $SECRET_KEY
+            -   name: Split Urls
+                id: urls
+                shell: python
+                run: |
+                    import os, json
+                    filenames = [os.path.basename(path) for path in os.environ["CHANGED_FILES"].split()]
+                    formatted = [f"{os.environ['CDN_URL_PREFIX']}{path}" for path in filenames]
+                    with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+                        f.write(f"json={json.dumps(formatted)}\n")
+            -   name: Purge Tencent Cloud CDN Cache
+                run: tccli cdn PurgeUrlsCache --Urls "$(echo '${{ steps.urls.outputs.json }}')"

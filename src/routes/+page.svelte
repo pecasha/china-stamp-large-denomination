@@ -44,8 +44,7 @@
 
 <script lang="ts">
     import { onMount } from "svelte";
-
-    import { PUBLIC_STAMP_IMAGE_URL_PREFIX } from "$env/static/public";
+    import { dev } from "$app/environment";
 
     import Stamp, { type StampItem } from "@/modules/stamp";
 
@@ -56,7 +55,7 @@
         RulerCombinedOutline
     } from "flowbite-svelte-icons";
 
-    const stampImageUrlPrefix = PUBLIC_STAMP_IMAGE_URL_PREFIX ?? "https://assets.stamp.pecasha.com/images/stamps/";
+    const stampImageUrlPrefix = dev ? "/images/" : "https://assets.stamp.pecasha.com/images/stamps/";
 
     const imgEls: HTMLImageElement[] = [];
 
