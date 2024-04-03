@@ -32,8 +32,14 @@ jobs:
         steps:
             -   name: Checkout Repository
                 uses: actions/checkout@v4
+            -   name: pip Cache
+                uses: actions/cache@v4
+                id: cache
+                with:
+                    path: ~/.cache/pip
+                    key: ${{ runner.os }}-pip-images-cdn
             -   name: Install coscmd
-                run: sudo pip install coscmd
+                run: pip install coscmd
             -   name: Authenticate With Tencent Cloud COS
                 run: coscmd config -a $SECRET_ID -s $SECRET_KEY -b $COS_BUCKET -r $COS_REGION
             -   name: Upload Changed Files to Tencent Cloud COS
@@ -42,7 +48,7 @@ jobs:
                         coscmd upload $file $COS_PATH
                     done
             -   name: Install tccli
-                run: sudo pip install tccli
+                run: pip install tccli
             -   name: Authenticate With Tencent Cloud CLI
                 run: tccli configure set secretId $SECRET_ID secretKey $SECRET_KEY
             -   name: Split Urls

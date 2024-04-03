@@ -1,0 +1,59 @@
+name: Deploy Prod to Tencent Cloud
+on: workflow_dispatch
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        env:
+            NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        steps:
+            -   name: Checkout Repository
+                uses: actions/checkout@v4
+            -   name: Install pnpm
+                uses: pnpm/action-setup@v3
+                with:
+                    version: "latest"
+            -   name: Install Node.js
+                uses: actions/setup-node@v4
+                with:
+                    node-version: "20.x"
+                    cache: "pnpm"
+                    cache-dependency-path: "pnpm-lock.yaml"
+            -   name: Install Dependencies
+                run: pnpm i
+            -   name: Build
+                run: |
+                    pnpm check
+                    pnpm build
+            -   name: Deploy to Server
+                uses: easingthemes/ssh-deploy@main
+                with:
+                    SSH_PRIVATE_KEY: ${{ secrets.TENCENT_CLOUD_SSH_PRIVATE_KEY }}
+                    REMOTE_HOST: ${{ secrets.TENCENT_CLOUD_REMOTE_HOST }}
+                    REMOTE_USER: ${{ secrets.TENCENT_CLOUD_REMOTE_USER }}
+                    TARGET: ${{ secrets.TENCENT_CLOUD_DEPLOY_TARGET }}
+                    SOURCE: "build/"
+                    ARGS: "-avzr --delete"
+            -   name: Pack Artifacts
+                uses: actions/upload-artifact@v4
+                with:
+                    name: build-${{ github.run_id }}
+                    path: build
+    dispatch:
+        needs: deploy
+        runs-on: ubuntu-latest
+        env:
+            SECRET_ID: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
+            SECRET_KEY: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
+        steps:
+            -   name: pip Cache
+                uses: actions/cache@v4
+                id: cache
+                with:
+                    path: ~/.cache/pip
+                    key: ${{ runner.os }}-pip-deploy-prod
+            -   name: Install tccli
+                run: pip install tccli
+            -   name: Authenticate With Tencent Cloud CLI
+                run: tccli configure set secretId $SECRET_ID secretKey $SECRET_KEY
+            -   name: Purge Tencent Cloud CDN Cache
+                run: tccli cdn PurgeUrlsCache --Urls "$(echo '["${{ vars.WEBSITE_DOMAIN }}"]')"
