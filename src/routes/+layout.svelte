@@ -1,4 +1,6 @@
-<slot></slot>
+<main>
+    <slot />
+</main>
 
 <svelte:head>
     {@html webManifestLink}

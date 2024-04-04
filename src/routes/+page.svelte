@@ -1,7 +1,7 @@
 <div class="page">
     <header>
         <div class="logo">
-            <img src="/favicon.png"
+            <img src="/logo.png"
                  alt="中国大面值邮票图鉴">
             <section>
                 <h1>中国大面值邮票图鉴</h1>

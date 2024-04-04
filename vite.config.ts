@@ -9,11 +9,28 @@ export default defineConfig({
         SvelteKitPWA({
             registerType: "autoUpdate",
             includeAssets: [
-                "favicon.png"
+                "favicon.ico",
+                "logo.png"
             ],
             workbox: {
+                globIgnores: [
+                    "**/images/*.{png,jpg,jpeg,webp,gif}"
+                ],
                 globPatterns: [
-                    "**/*.{jpg,png}"
+                    "client/**/*.{js,css,ico,png}"
+                ],
+                runtimeCaching: [
+                    {
+                        urlPattern: /\.(?:png|jpg|jpeg|webp|gif)$/i,
+                        handler: "CacheFirst",
+                        options: {
+                            cacheName: "images-cache",
+                            expiration: {
+                                maxEntries: 1000,
+                                maxAgeSeconds: 604_800
+                            }
+                        }
+                    }
                 ]
             },
             manifest: {
@@ -26,7 +43,7 @@ export default defineConfig({
                 orientation: "landscape-primary",
                 icons: [
                     {
-                        src: "favicon.png",
+                        src: "logo.png",
                         sizes: "128x128",
                         type: "image/png"
                     }

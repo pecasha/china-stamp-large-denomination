@@ -56,4 +56,4 @@ jobs:
             -   name: Authenticate With Tencent Cloud CLI
                 run: tccli configure set secretId $SECRET_ID secretKey $SECRET_KEY
             -   name: Purge Tencent Cloud CDN Cache
-                run: tccli cdn PurgeUrlsCache --Urls "$(echo '["${{ vars.WEBSITE_DOMAIN }}"]')"
+                run: tccli cdn PurgeUrlsCache --Urls "$(echo '${{ vars.DEPLOY_CDN_PURGE_URLS }}')"

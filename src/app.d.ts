@@ -1,5 +1,4 @@
 import "vite-plugin-pwa/info";
-import "vite-plugin-pwa/svelte";
 
 declare global {
     namespace App {
