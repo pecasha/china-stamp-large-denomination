@@ -94,7 +94,7 @@
     :global(body) {
         width: 100%;
         min-height: 100%;
-        background-color: #f2f2f2;
+        background-color: #f1f5f8;
     }
     :global(body) {
         min-width: 299px;
@@ -204,7 +204,7 @@
             border-radius: 10px;
             background-color: #fff;
             border: 1px solid #e4e7ed;
-            color: #303133;
+            color: #555;
             transition: ease .3s;
             &:hover,
             &:focus {
@@ -235,11 +235,10 @@
                 width: 100%;
                 min-height: 20px;
                 margin-top: 6px;
+                line-height: 20px;
                 cursor: default;
                 > p {
                     display: inline;
-                    min-height: 20px;
-                    line-height: 20px;
                     font-size: 12px;
                     color: #999;
                 }
@@ -295,25 +294,25 @@
                     border: 0;
                     color: #fff;
                     &.普通邮票 {
-                        background-color: #409eff;
+                        background-color: lighten(#409eff, 20%);
                     }
                     &.特种邮票 {
-                        background-color: #67c23a;
+                        background-color: lighten(#67c23a, 20%);
                     }
                     &.纪念邮票 {
-                        background-color: #e6a23c;
+                        background-color: lighten(#e6a23c, 20%);
                     }
                     &.特别发行邮票 {
-                        background-color: #983680;
+                        background-color: lighten(#c351a7, 20%);
                     }
                     &.贺卡专用邮票 {
-                        background-color: #12aa9c;
+                        background-color: lighten(#39bfb3, 20%);
                     }
                     &.个性化服务专用邮票 {
-                        background-color: #d85916;
+                        background-color: lighten(#d86f38, 20%);
                     }
                     &.贺年专用邮票 {
-                        background-color: #f56c6c;
+                        background-color: lighten(#f56c6c, 20%);
                     }
                 }
                 > p {
@@ -355,7 +354,7 @@
             }
         }
     }
-    @media screen and (min-width: 500px) {
+    @media screen and (min-width: 500px) and (max-width: 729px) {
         .list {
             column-count: 2;
             column-gap: 10px;
@@ -365,7 +364,7 @@
             }
         }
     }
-    @media screen and (min-width: 730px) {
+    @media screen and (min-width: 730px) and (max-width: 964px) {
         .list {
             column-count: 3;
             column-gap: 15px;
@@ -375,7 +374,7 @@
             }
         }
     }
-    @media screen and (min-width: 965px) {
+    @media screen and (min-width: 965px) and (max-width: 1229px) {
         .list {
             column-count: 4;
             column-gap: 15px;
@@ -385,22 +384,22 @@
             }
         }
     }
-    @media screen and (min-width: 1230px) {
+    @media screen and (min-width: 1230px) and (max-width: 1469px) {
         .list {
             column-count: 5;
         }
     }
-    @media screen and (min-width: 1470px) {
+    @media screen and (min-width: 1470px) and (max-width: 1709px) {
         .list {
             column-count: 6;
         }
     }
-    @media screen and (min-width: 1710px) {
+    @media screen and (min-width: 1710px) and (max-width: 1949px) {
         .list {
             column-count: 7;
         }
     }
-    @media screen and (min-width: 1950px) {
+    @media screen and (min-width: 1950px) and (max-width: 2189px) {
         .list {
             column-count: 8;
         }
