@@ -31,4 +31,16 @@ export default class Stamp {
     get data() {
         return this.#data;
     }
+
+    get dataByValue() {
+        return Object.groupBy(this.#data, ({value}) => value);
+    }
+
+    get dataByType() {
+        return Object.groupBy(this.#data, ({type}) => type);
+    }
+
+    get dataBySize() {
+        return Object.groupBy(this.#data, ({size}) => size);
+    }
 }
