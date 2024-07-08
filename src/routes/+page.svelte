@@ -63,7 +63,14 @@
                 </Dropdown>
             </Dropdown>
             <div class="menu-button">
-                <div class="sort-filter"><FilterOutline size="lg" />排序 / 筛选</div>
+                <a class="github"
+                   href="https://github.com/pecasha/china-stamp-large-denomination"
+                   target={urlTarget}>
+                    <GithubSolid size="lg" />
+                </a>
+                <div class="sort-filter">
+                    <FilterOutline size="lg" />
+                </div>
             </div>
         </div>
     </header>
@@ -121,12 +128,17 @@
         ChevronLeftOutline,
         ArrowUpOutline,
         ArrowDownOutline,
-        FilterOutline
+        FilterOutline,
+        GithubSolid
     } from "flowbite-svelte-icons";
 
-    import { dateParse } from "@pecasha/util";
+    import {
+        dateParse,
+        browserVersion
+    } from "@pecasha/util";
 
     const stampImageUrlPrefix = dev ? "/images/" : "https://assets.stamp.pecasha.com/images/stamps/";
+
 
     const imgEls: HTMLImageElement[] = [];
 
@@ -136,6 +148,7 @@
     let listEl: HTMLUListElement;
 
     let sort = 0;
+    let urlTarget =  "_blank";
 
     let filterValueMap: number[] = Object.keys(stamp.dataByValue).map(Number).sort((a, b) => a - b);
     let filterValue: number[] = [];
@@ -201,6 +214,9 @@
     }
 
     onMount(() => {
+        if(browserVersion().mobile) {
+            urlTarget = "_self";
+        }
         for(const img of imgEls) {
             if(img.complete) {
                 img.classList.add("loaded");
@@ -326,7 +342,7 @@
             .menu-button {
                 .align(center);
                 height: 100%;
-                gap: 20px;
+                gap: 10px;
                 > * {
                     .align(v-center, inline-flex);
                     height: 100%;
