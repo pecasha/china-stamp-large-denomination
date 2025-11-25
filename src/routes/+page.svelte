@@ -380,10 +380,11 @@
             background-color: #fff;
             border: 1px solid #e4e7ed;
             color: #555;
-            transition: box-shadow ease .3s;
+            transition: all .3s ease;
             &:hover,
             &:focus {
-                box-shadow: 0 0 12px rgba(0,0,0,.12);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,.08);
             }
             > img {
                 width: 100%;
