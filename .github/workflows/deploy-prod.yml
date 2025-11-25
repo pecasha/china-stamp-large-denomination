@@ -30,14 +30,14 @@ jobs:
                     pnpm check
                     pnpm build
             -   name: Deploy to Server
-                uses: easingthemes/ssh-deploy@main
+                uses: Burnett01/rsync-deployments@7.1.0
                 with:
-                    SSH_PRIVATE_KEY: ${{ secrets.TENCENT_CLOUD_SSH_PRIVATE_KEY }}
-                    REMOTE_HOST: ${{ secrets.TENCENT_CLOUD_REMOTE_HOST }}
-                    REMOTE_USER: ${{ secrets.TENCENT_CLOUD_REMOTE_USER }}
-                    TARGET: ${{ secrets.TENCENT_CLOUD_DEPLOY_TARGET }}
-                    SOURCE: "build/"
-                    ARGS: "-avzr --delete"
+                    remote_key: ${{ secrets.TENCENT_CLOUD_SSH_PRIVATE_KEY }}
+                    remote_host: ${{ secrets.TENCENT_CLOUD_REMOTE_HOST }}
+                    remote_user: ${{ secrets.TENCENT_CLOUD_REMOTE_USER }}
+                    remote_path: ${{ secrets.TENCENT_CLOUD_DEPLOY_TARGET }}
+                    path: build/
+                    switches: -avzr --delete
             -   name: Pack Artifacts
                 uses: actions/upload-artifact@v4
                 with:
@@ -61,4 +61,4 @@ jobs:
             -   name: Authenticate With Tencent Cloud CLI
                 run: tccli configure set secretId $SECRET_ID secretKey $SECRET_KEY
             -   name: Purge Tencent Cloud CDN Cache
-                run: tccli cdn PurgeUrlsCache --Urls "$(echo '${{ vars.DEPLOY_CDN_PURGE_URLS }}')"
+                run: tccli cdn PurgePathCache --Paths "$(echo '${{ vars.DEPLOY_CDN_PURGE_URLS }}')" --FlushType "delete"
