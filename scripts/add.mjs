@@ -12,11 +12,11 @@ const stampNo = await inquirer.input({
     required: true,
     validate: text => {
         if(
-            /^20\d{2}-[1-9]\d*$/.test(text) ||
-            /^HN20\d{2}-[1-9]\d*$/.test(text) ||
-            /^[GHP][1-9]\d*-[1-9]\d*$/.test(text) ||
-            /^[GHP][1-9]\d*$/.test(text) ||
-            /^T[1-9]\d*-20\d{2}$/.test(text)
+            /^20\d{2}-[0-9]\d*$/.test(text) ||
+            /^HN20\d{2}-[0-9]\d*$/.test(text) ||
+            /^[GHP][0-9]\d*-[0-9]\d*$/.test(text) ||
+            /^[GHP][0-9]\d*$/.test(text) ||
+            /^T[0-9]\d*-20\d{2}$/.test(text)
         ) {
             return true;
         }
@@ -44,7 +44,7 @@ if(await inquirer.confirm({
     });
 }
 
-const stampImageName = `${stampNo}-${stampSerial.split("-").pop()}`;
+const stampImageName = stampSerial === "1-1" ? stampNo : `${stampNo}-${stampSerial.split("-").pop()}`;
 
 const dataFilePath = path.join(process.cwd(), "src", "data", "stamp.json")
 
@@ -157,7 +157,8 @@ switch (stampShape) {
 
 const stampValue = await inquirer.number({
     message: "请输入邮票面值(元)：",
-    min: 0,
+    min: 2,
+    step: 0.1,
     required: true
 });
 
