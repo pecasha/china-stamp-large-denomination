@@ -5,59 +5,51 @@
                  alt="中国大面值邮票图鉴">
             <section>
                 <h1>中国大面值邮票图鉴<QuestionCircleOutline size="sm"/><Tooltip type="dark" placement="bottom-start">只收录带有荧光编码并且面值大于等于 2元 的邮票，不包含小型张。<br>从 2002年9月7日 发行的「雁荡山」特种邮票之后，所有的邮票都使用了荧光喷码</Tooltip></h1>
-                <p>只收录带有荧光编码并且面值大于等于 2元 的邮票，不包含小型张 <QuestionCircleOutline class="cursor-pointer" size="sm"/><Tooltip type="dark" placement="bottom">从 2002年9月7日 发行的「雁荡山」特种邮票之后，所有的邮票都使用了荧光喷码</Tooltip></p>
+                <h2 class="tips">只收录带有荧光编码并且面值大于等于 2元 的邮票，不包含小型张 <QuestionCircleOutline class="cursor-pointer" size="sm"/><Tooltip type="dark" placement="bottom">从 2002年9月7日 发行的「雁荡山」特种邮票之后，所有的邮票都使用了荧光喷码</Tooltip></h2>
             </section>
         </div>
         <div class="menu">
             <Dropdown triggeredBy=".sort-filter"
-                      trigger="hover"
                       placement="bottom-end"
                       arrow>
                 <DropdownItem class="flex items-center text-base ps-2 pe-4"><ChevronLeftOutline size="lg"/>排序</DropdownItem>
                 <Dropdown placement="left-start"
-                          trigger="hover"
                           arrow>
                     <DropdownItem class="flex items-center text-base ps-2 pe-4"><ChevronLeftOutline size="lg"/>发行时间</DropdownItem>
                     <Dropdown placement="left-start"
-                              trigger="hover"
                               arrow>
-                        <DropdownItem class="flex items-center text-base ps-3 pe-2"><Radio class="text-base" name="sort" bind:group={sort} value={0} color="red" on:click={filterUpdate}>降序<ArrowDownOutline size="md"/></Radio></DropdownItem>
-                        <DropdownItem class="flex items-center text-base ps-3 pe-2"><Radio class="text-base" name="sort" bind:group={sort} value={1} color="red" on:click={filterUpdate}>升序<ArrowUpOutline size="md"/></Radio></DropdownItem>
+                        <DropdownItem class="flex items-center text-base ps-3 pe-2"><Radio class="text-base" name="sort" bind:group={sort} value={0} color="red" onclick={filterUpdate}>降序<ArrowDownOutline size="md"/></Radio></DropdownItem>
+                        <DropdownItem class="flex items-center text-base ps-3 pe-2"><Radio class="text-base" name="sort" bind:group={sort} value={1} color="red" onclick={filterUpdate}>升序<ArrowUpOutline size="md"/></Radio></DropdownItem>
                     </Dropdown>
                     <DropdownItem class="flex items-center text-base ps-2 pe-4"><ChevronLeftOutline size="lg"/>面值</DropdownItem>
                     <Dropdown placement="left-start"
-                              trigger="hover"
                               arrow>
-                        <DropdownItem class="flex items-center text-base ps-3 pe-2"><Radio class="text-base" name="sort" bind:group={sort} value={2} color="red" on:click={filterUpdate}>降序<ArrowDownOutline size="md"/></Radio></DropdownItem>
-                        <DropdownItem class="flex items-center text-base ps-3 pe-2"><Radio class="text-base" name="sort" bind:group={sort} value={3} color="red" on:click={filterUpdate}>升序<ArrowUpOutline size="md"/></Radio></DropdownItem>
+                        <DropdownItem class="flex items-center text-base ps-3 pe-2"><Radio class="text-base" name="sort" bind:group={sort} value={2} color="red" onclick={filterUpdate}>降序<ArrowDownOutline size="md"/></Radio></DropdownItem>
+                        <DropdownItem class="flex items-center text-base ps-3 pe-2"><Radio class="text-base" name="sort" bind:group={sort} value={3} color="red" onclick={filterUpdate}>升序<ArrowUpOutline size="md"/></Radio></DropdownItem>
                     </Dropdown>
                 </Dropdown>
                 <DropdownItem class="flex items-center text-base ps-2 pe-4"><ChevronLeftOutline size="lg"/>筛选</DropdownItem>
                 <Dropdown placement="left-start"
-                          trigger="hover"
                           arrow>
                     <DropdownItem class="flex items-center text-base ps-2 pe-4"><ChevronLeftOutline size="lg"/>类型</DropdownItem>
                     <Dropdown placement="left-start"
-                              trigger="hover"
                               arrow>
                         {#each filterTypeMap as item}
-                            <DropdownItem class="flex items-center text-base px-4"><Checkbox class="text-base" checked={filterType.includes(item)} on:change={event => filterChange(filterType,event,item)}>{item}</Checkbox></DropdownItem>
+                            <DropdownItem class="flex items-center text-base px-4"><Checkbox class="text-base" checked={filterType.includes(item)} onchange={event => filterChange(filterType,event,item)}>{item}</Checkbox></DropdownItem>
                         {/each}
                     </Dropdown>
                     <DropdownItem class="flex items-center text-base ps-2 pe-4"><ChevronLeftOutline size="lg"/>面值</DropdownItem>
                     <Dropdown placement="left-start"
-                              trigger="hover"
                               arrow>
                         {#each filterValueMap as item}
-                            <DropdownItem class="flex items-center text-base px-4"><Checkbox class="text-base" checked={filterValue.includes(item)} on:change={event => filterChange(filterValue,event,item)}>{item}元</Checkbox></DropdownItem>
+                            <DropdownItem class="flex items-center text-base px-4"><Checkbox class="text-base" checked={filterValue.includes(item)} onchange={event => filterChange(filterValue,event,item)}>{item}元</Checkbox></DropdownItem>
                         {/each}
                     </Dropdown>
                     <DropdownItem class="flex items-center text-base ps-2 pe-4"><ChevronLeftOutline size="lg"/>尺寸</DropdownItem>
                     <Dropdown placement="left-start"
-                              trigger="hover"
                               arrow>
                         {#each filterSizeMap as item}
-                            <DropdownItem class="flex items-center px-3"><Checkbox checked={filterSize.includes(item)} on:change={event => filterChange(filterSize,event,item)}>{item}</Checkbox></DropdownItem>
+                            <DropdownItem class="flex items-center px-3"><Checkbox checked={filterSize.includes(item)} onchange={event => filterChange(filterSize,event,item)}>{item}</Checkbox></DropdownItem>
                         {/each}
                     </Dropdown>
                 </Dropdown>
@@ -75,37 +67,41 @@
         </div>
     </header>
     <hr class="scrollbar-border">
-    <ul class="list"
-        bind:this={listEl}>
-        {#each list as item, index (item.img)}
-            <li transition:scale>
-                <img src="{stampImageUrlPrefix}{item.img}.png"
-                     loading="lazy"
-                     bind:this={imgEls[index]}
-                     alt={item.name||item.title}
-                     style="aspect-ratio:{item.imgRatio}">
-                <h1 class="title">{item.title}</h1>
-                {#if item.number||item.name}
-                    <div class="name">
-                        {#if item.number}
-                            <span class="tag">{item.number}</span>
+    <div class="list"
+         bind:this={listEl}>
+        {#each columns as column}
+            <ul class="column">
+                {#each column as item, index (item.img)}
+                    <li transition:scale>
+                        <img src="{stampImageUrlPrefix}{item.img}.png"
+                             loading="lazy"
+                             bind:this={imgEls[index]}
+                             alt={item.name||item.title}
+                             style="aspect-ratio:{item.imgRatio}">
+                        <h1 class="title">{item.title}</h1>
+                        {#if item.number||item.name}
+                            <div class="name">
+                                {#if item.number}
+                                    <span class="tag">{item.number}</span>
+                                {/if}
+                                {#if item.name}
+                                    <p>{item.name}</p>
+                                {/if}
+                            </div>
                         {/if}
-                        {#if item.name}
-                            <p>{item.name}</p>
-                        {/if}
-                    </div>
-                {/if}
-                <div class="denomination">
-                    <b>{item.value}</b>
-                    <p title="尺寸单位: 毫米"><RulerCombinedOutline size="sm"/>{item.size}</p>
-                </div>
-                <div class="type">
-                    <span class="tag {item.type}">{item.type}</span>
-                    <p title="发行时间">{item.date}</p>
-                </div>
-            </li>
+                        <div class="denomination">
+                            <b>{item.value}</b>
+                            <p title="尺寸单位: 毫米"><RulerCombinedOutline size="sm"/>{item.size}</p>
+                        </div>
+                        <div class="type">
+                            <span class="tag {item.type}">{item.type}</span>
+                            <p title="发行时间">{item.date}</p>
+                        </div>
+                    </li>
+                {/each}
+            </ul>
         {/each}
-    </ul>
+    </div>
 </div>
 
 <script lang="ts">
@@ -113,7 +109,7 @@
     import { scale } from "svelte/transition";
     import { dev } from "$app/environment";
 
-    import Stamp from "@/modules/stamp";
+    import Stamp, { type StampItem } from "@/modules/stamp";
 
     import {
         Tooltip,
@@ -134,28 +130,31 @@
 
     import {
         dateParse,
-        browserVersion
-    } from "@pecasha/util";
+        browserVersion,
+        debounce
+    } from "@pomerun/util";
 
     const stampImageUrlPrefix = dev ? "/images/" : "https://assets.stamp.pecasha.com/images/stamps/";
-
 
     const imgEls: HTMLImageElement[] = [];
 
     const stamp = new Stamp();
     let list = stamp.data;
+    let columns: StampItem[][] = $state([]);
 
-    let listEl: HTMLUListElement;
+    let listEl: HTMLDivElement;
 
-    let sort = 0;
-    let urlTarget =  "_blank";
+    let columnCount = $state(0);
+
+    let sort = $state(0);
+    let urlTarget = $state("_blank");
 
     let filterValueMap: number[] = Object.keys(stamp.dataByValue).map(Number).sort((a, b) => a - b);
-    let filterValue: number[] = [];
+    let filterValue: number[] = $state([]);
     let filterTypeMap: string[] = Object.keys(stamp.dataByType);
-    let filterType: string[] = [];
+    let filterType: string[] = $state([]);
     let filterSizeMap: string[] = Object.keys(stamp.dataBySize);
-    let filterSize: string[] = [];
+    let filterSize: string[] = $state([]);
 
     const filterChange = (target: (number|string)[], event: Event, value: number|string) => {
         const { checked } = event.target as HTMLInputElement;
@@ -169,7 +168,9 @@
     }
 
     const filterUpdate = async () => {
-        list = [];
+        for(let i=0; i<columns.length; i++) {
+            columns[i] = [];
+        }
         await tick();
         const _el = listEl.querySelector("li[inert]");
         if(_el) {
@@ -177,7 +178,9 @@
                 for(const mutation of mutations) {
                     if (!mutation.target.contains(_el)) {
                         observer.disconnect();
+                        columns = [];
                         listUpdate();
+                        setColumns();
                     }
                 }
             });
@@ -186,7 +189,9 @@
                 subtree: true
             });
         } else {
+            columns = [];
             listUpdate();
+            setColumns();
         }
     }
 
@@ -213,7 +218,44 @@
         });
     }
 
+    const setColumnInfo = () => {
+        const style = getComputedStyle(listEl)
+        columnCount = style.gridTemplateColumns.split(" ").filter(c => c.trim()).length || 1;
+    }
+
+    const setColumns = () => {
+        const cols = Array.from({
+            length: columnCount
+        }, () => ({
+            items: [] as StampItem[],
+            height: 0
+        }));
+
+        for (const item of list) {
+            let minIndex = 0;
+            for (let i=1; i<cols.length; i++) {
+                if (cols[i].height < cols[minIndex].height) {
+                    minIndex = i;
+                }
+            }
+            cols[minIndex].items.push(item);
+            cols[minIndex].height += 240 / item.imgRatio + Math.ceil(item.title.length / 11) * 26 + (item.name ? Math.ceil(item.name.length / 15) * 20 + 6 : 0); // 宽度固定240px就可以，因为所有列的宽度都是相同的
+        }
+
+        columns = cols.map(col => col.items);
+    }
+
     onMount(() => {
+        setColumnInfo();
+        setColumns();
+        window.addEventListener("resize", debounce(() => {
+            columns = [];
+            tick().then(() => {
+                setColumnInfo();
+                setColumns();
+            });
+        }, 200));
+
         if(browserVersion().mobile) {
             urlTarget = "_self";
         }
@@ -237,12 +279,16 @@
         outline: 0;
         zoom: 1;
         resize: none;
+        list-style-type: none;
         -webkit-text-size-adjust: none;
         font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, "-apple-system", sans-serif;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         -webkit-touch-callout: none;
+        box-sizing: border-box;
+        user-select: none;
+        interpolate-size: allow-keywords;
     }
     :global(html),
     :global(body) {
@@ -318,7 +364,7 @@
                         display: none;
                     }
                 }
-                > p {
+                > h2 {
                     position: relative;
                     width: 100%;
                     min-height: 16px;
@@ -367,137 +413,144 @@
 
     .list {
         width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
         padding: 20px;
-        column-count: 6;
-        column-gap: 20px;
-        transition: none;
-        > li {
+        .column {
+            display: flex;
+            flex-direction: column;
+            column-gap: 20px;
             width: 100%;
-            padding: 20px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            background-color: #fff;
-            border: 1px solid #e4e7ed;
-            color: #555;
-            transition: all .3s ease;
-            &:hover,
-            &:focus {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(0,0,0,.08);
-            }
-            > img {
+            > li {
                 width: 100%;
+                padding: 20px;
                 overflow: hidden;
-                margin-bottom: 15px;
-                border-radius: 5px;
-                background-color: #eee;
-                transition: none ease 1s;
-                transition-property: border-radius, filter, background-color;
-                &:global(.loaded) {
-                    will-change: contents;
-                    border-radius: 0;
-                    filter: drop-shadow(0 0 2px rgba(0,0,0,.25));
-                    background-color: transparent;
+                margin-bottom: 20px;
+                border-radius: 10px;
+                background-color: #fff;
+                border: 1px solid #e4e7ed;
+                color: #555;
+                transition: all .3s ease;
+                &:hover,
+                &:focus {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0,0,0,.08);
                 }
-            }
-            .title {
-                width: 100%;
-                line-height: 26px;
-                font-size: 18px;
-                font-weight: bold;
-                cursor: default;
-            }
-            .name {
-                width: 100%;
-                min-height: 20px;
-                margin-top: 6px;
-                line-height: 20px;
-                cursor: default;
-                > p {
-                    display: inline;
-                    font-size: 12px;
-                    color: #999;
-                }
-            }
-            .tag {
-                display: inline-flex;
-                padding: 0 5px;
-                height: 16px;
-                font-size: 12px;
-                justify-content: center;
-                align-items: center;
-                vertical-align: middle;
-                line-height: 1;
-                border-radius: 4px;
-                white-space: nowrap;
-                background-color: #f4f4f5;
-                border: 1px solid #e9e9eb;
-                color: #909399;
-                user-select: none;
-            }
-            .denomination {
-                .align(v-center);
-                .align(h-space-between);
-                width: 100%;
-                padding: 10px 0;
-                margin-top: 10px;
-                border-top: 1px solid #eee;
-                user-select: none;
-                > b {
-                    font-size: 20px;
-                    color: #f08282;
-                    &::before {
-                        content: "￥";
+                > img {
+                    width: 100%;
+                    overflow: hidden;
+                    margin-bottom: 15px;
+                    border-radius: 5px;
+                    background-color: #eee;
+                    transition: none ease 1s;
+                    transition-property: border-radius, filter, background-color;
+                    &:global(.loaded) {
+                        will-change: contents;
+                        border-radius: 0;
+                        filter: drop-shadow(0 0 2px rgba(0,0,0,.25));
+                        background-color: transparent;
+                        object-fit: contain;
                     }
                 }
-                > p {
-                    .align(v-center, inline-flex);
-                    height: 100%;
-                    column-gap: 2px;
-                    font-size: 15px;
-                    color: #999;
+                .title {
+                    width: 100%;
+                    line-height: 26px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    cursor: default;
                 }
-            }
-            .type {
-                .align(bottom);
-                .align(h-space-between);
-                width: 100%;
-                height: 22px;
-                user-select: none;
+                .name {
+                    width: 100%;
+                    min-height: 20px;
+                    margin-top: 6px;
+                    line-height: 20px;
+                    cursor: default;
+                    > p {
+                        display: inline;
+                        font-size: 12px;
+                        color: #999;
+                    }
+                }
                 .tag {
-                    height: 22px;
-                    padding: 0 6px;
-                    border: 0;
-                    color: #fff;
-                    &.普通邮票 {
-                        background-color: lighten(#409eff, 20%);
+                    display: inline-flex;
+                    padding: 0 5px;
+                    height: 16px;
+                    font-size: 12px;
+                    justify-content: center;
+                    align-items: center;
+                    vertical-align: middle;
+                    line-height: 1;
+                    border-radius: 4px;
+                    white-space: nowrap;
+                    background-color: #f4f4f5;
+                    border: 1px solid #e9e9eb;
+                    color: #909399;
+                    user-select: none;
+                }
+                .denomination {
+                    .align(v-center);
+                    .align(h-space-between);
+                    width: 100%;
+                    padding: 10px 0;
+                    margin-top: 10px;
+                    border-top: 1px solid #eee;
+                    user-select: none;
+                    > b {
+                        font-size: 20px;
+                        color: #f08282;
+                        &::before {
+                            content: "￥";
+                        }
                     }
-                    &.特种邮票 {
-                        background-color: lighten(#67c23a, 20%);
-                    }
-                    &.纪念邮票 {
-                        background-color: lighten(#e6a23c, 20%);
-                    }
-                    &.特别发行邮票 {
-                        background-color: lighten(#c351a7, 20%);
-                    }
-                    &.贺卡专用邮票 {
-                        background-color: lighten(#39bfb3, 20%);
-                    }
-                    &.个性化服务专用邮票 {
-                        background-color: lighten(#d86f38, 20%);
-                    }
-                    &.贺年专用邮票 {
-                        background-color: lighten(#f56c6c, 20%);
+                    > p {
+                        .align(v-center, inline-flex);
+                        height: 100%;
+                        column-gap: 2px;
+                        font-size: 15px;
+                        color: #999;
                     }
                 }
-                > p {
-                    padding-bottom: 2px;
-                    line-height: 1;
-                    text-decoration: underline;
-                    font-size: 12px;
-                    color: #999;
+                .type {
+                    .align(bottom);
+                    .align(h-space-between);
+                    width: 100%;
+                    height: 22px;
+                    user-select: none;
+                    .tag {
+                        height: 22px;
+                        padding: 0 6px;
+                        border: 0;
+                        color: #fff;
+                        &.普通邮票 {
+                            background-color: lighten(#409eff, 20%);
+                        }
+                        &.特种邮票 {
+                            background-color: lighten(#67c23a, 20%);
+                        }
+                        &.纪念邮票 {
+                            background-color: lighten(#e6a23c, 20%);
+                        }
+                        &.特别发行邮票 {
+                            background-color: lighten(#c351a7, 20%);
+                        }
+                        &.贺卡专用邮票 {
+                            background-color: lighten(#39bfb3, 20%);
+                        }
+                        &.个性化服务专用邮票 {
+                            background-color: lighten(#d86f38, 20%);
+                        }
+                        &.贺年专用邮票 {
+                            background-color: lighten(#f56c6c, 20%);
+                        }
+                    }
+                    > p {
+                        padding-bottom: 2px;
+                        line-height: 1;
+                        text-decoration: underline;
+                        font-size: 12px;
+                        color: #999;
+                    }
                 }
             }
         }
@@ -522,7 +575,7 @@
                         vertical-align: text-bottom;
                     }
                 }
-                > p {
+                > h2 {
                     display: none;
                 }
             }
@@ -564,67 +617,14 @@
             display: none;
         }
         .list {
-            column-count: 1;
             column-gap: 15px;
             padding: 15px;
-            > li {
-                margin-bottom: 15px;
+            .column {
+                column-gap: 15px;
+                > li {
+                    margin-bottom: 15px;
+                }
             }
-        }
-    }
-    @media screen and (min-width: 500px) and (max-width: 729px) {
-        .list {
-            column-count: 2;
-            column-gap: 10px;
-            padding: 10px;
-            > li {
-                margin-bottom: 10px;
-            }
-        }
-    }
-    @media screen and (min-width: 730px) and (max-width: 964px) {
-        .list {
-            column-count: 3;
-            column-gap: 15px;
-            padding: 15px;
-            > li {
-                margin-bottom: 15px;
-            }
-        }
-    }
-    @media screen and (min-width: 965px) and (max-width: 1229px) {
-        .list {
-            column-count: 4;
-            column-gap: 15px;
-            padding: 15px;
-            > li {
-                margin-bottom: 15px;
-            }
-        }
-    }
-    @media screen and (min-width: 1230px) and (max-width: 1469px) {
-        .list {
-            column-count: 5;
-        }
-    }
-    @media screen and (min-width: 1470px) and (max-width: 1709px) {
-        .list {
-            column-count: 6;
-        }
-    }
-    @media screen and (min-width: 1710px) and (max-width: 1949px) {
-        .list {
-            column-count: 7;
-        }
-    }
-    @media screen and (min-width: 1950px) and (max-width: 2189px) {
-        .list {
-            column-count: 8;
-        }
-    }
-    @media screen and (min-width: 2190px) {
-        .list {
-            column-count: 9;
         }
     }
 </style>
