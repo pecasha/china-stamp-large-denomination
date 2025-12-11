@@ -7,6 +7,9 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            attestations: write
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[deploy]'))
         env:
             NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,6 +32,18 @@ jobs:
                 run: |
                     pnpm check
                     pnpm build
+                    zip -r build.zip build/
+            -   name: Attest Build Provenance
+                uses: actions/attest-build-provenance@v3
+                with:
+                    subject-path: ./build.zip
+            -   name: Pack Artifacts
+                uses: actions/upload-artifact@v4
+                with:
+                    name: build-${{ github.run_id }}
+                    path: |
+                        ./build.zip
+                        ./build.zip.intoto.jsonl
             -   name: Deploy to Server
                 uses: Burnett01/rsync-deployments@7.1.0
                 with:
@@ -38,11 +53,6 @@ jobs:
                     remote_path: ${{ secrets.TENCENT_CLOUD_DEPLOY_TARGET }}
                     path: build/
                     switches: -avzr --delete
-            -   name: Pack Artifacts
-                uses: actions/upload-artifact@v4
-                with:
-                    name: build-${{ github.run_id }}
-                    path: build
     dispatch:
         needs: deploy
         runs-on: ubuntu-latest
