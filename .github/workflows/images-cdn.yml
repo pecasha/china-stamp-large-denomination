@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout Repository
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
             -   name: Get Changed Files
                 id: changed-files
                 uses: tj-actions/changed-files@v44
@@ -31,7 +31,7 @@ jobs:
             CHANGED_FILES: ${{ needs.check.outputs.files }}
         steps:
             -   name: Checkout Repository
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
             -   name: pip Cache
                 uses: actions/cache@v4
                 id: cache

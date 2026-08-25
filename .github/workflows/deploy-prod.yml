@@ -13,22 +13,24 @@ jobs:
             id-token: write
             attestations: write
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[deploy]'))
-        env:
-            NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         steps:
             -   name: Checkout Repository
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
             -   name: Install pnpm
-                uses: pnpm/action-setup@v3
+                uses: pnpm/action-setup@v5
                 with:
                     version: "latest"
             -   name: Install Node.js
-                uses: actions/setup-node@v4
+                uses: actions/setup-node@v6
                 with:
-                    node-version: "22.x"
+                    node-version: '24'
                     cache: "pnpm"
                     cache-dependency-path: "pnpm-lock.yaml"
+                    registry-url: 'https://registry.npmjs.org'
             -   name: Install Dependencies
+                env:
+                    NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    PNPM_CONFIG_NPMRC_AUTH_FILE: .npmrc
                 run: pnpm i
             -   name: Build
                 run: |
