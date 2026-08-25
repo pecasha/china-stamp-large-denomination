@@ -77,7 +77,8 @@
                              loading="lazy"
                              bind:this={imgEls[index]}
                              alt={item.name||item.title}
-                             style="aspect-ratio:{item.imgRatio}">
+                             style="aspect-ratio:{item.imgRatio}"
+                             onload={(e)=>e.currentTarget.classList.add('loaded')}>
                         <h1 class="title">{item.title}</h1>
                         {#if item.number||item.name}
                             <div class="name">
@@ -259,15 +260,6 @@
         if(browserVersion().mobile) {
             urlTarget = "_self";
         }
-        for(const img of imgEls) {
-            if(img.complete) {
-                img.classList.add("loaded");
-            } else {
-                img.addEventListener("load", () => {
-                    img.classList.add("loaded");
-                });
-            }
-        }
     });
 </script>
 
@@ -444,11 +436,11 @@
                     border-radius: 5px;
                     background-color: #eee;
                     transition: none ease 1s;
-                    transition-property: border-radius, filter, background-color;
+                    transition-property: border-radius, filter;
                     &:global(.loaded) {
                         will-change: contents;
                         border-radius: 0;
-                        filter: drop-shadow(0 0 2px rgba(0,0,0,.25));
+                        filter: drop-shadow(0 0 1px rgba(0,0,0,.25));
                         background-color: transparent;
                         object-fit: contain;
                     }
