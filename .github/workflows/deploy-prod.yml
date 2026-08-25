@@ -8,6 +8,8 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         permissions:
+            contents: read
+            packages: read
             id-token: write
             attestations: write
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[deploy]'))
