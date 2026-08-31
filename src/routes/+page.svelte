@@ -75,7 +75,6 @@
                     <li transition:scale>
                         <img src="{stampImageUrlPrefix}{item.img}.png"
                              loading="lazy"
-                             bind:this={imgEls[index]}
                              alt={item.name||item.title}
                              style="aspect-ratio:{item.imgRatio}"
                              onload={(e)=>e.currentTarget.classList.add('loaded')}>
@@ -137,8 +136,6 @@
 
     const stampImageUrlPrefix = dev ? "/images/" : "https://assets.stamp.pecasha.com/images/stamps/";
 
-    const imgEls: HTMLImageElement[] = [];
-
     const stamp = new Stamp();
     let list = stamp.data;
     let columns: StampItem[][] = $state([]);
@@ -177,7 +174,7 @@
         if(_el) {
             const observer = new MutationObserver(mutations => {
                 for(const mutation of mutations) {
-                    if (!mutation.target.contains(_el)) {
+                    if (!listEl.contains(_el)) {
                         observer.disconnect();
                         columns = [];
                         listUpdate();
@@ -220,7 +217,7 @@
     }
 
     const setColumnInfo = () => {
-        const style = getComputedStyle(listEl)
+        const style = getComputedStyle(listEl);
         columnCount = style.gridTemplateColumns.split(" ").filter(c => c.trim()).length || 1;
     }
 
@@ -246,19 +243,47 @@
         columns = cols.map(col => col.items);
     }
 
+    const getColumnCount = () => {
+        const tracks = getComputedStyle(listEl).gridTemplateColumns;
+
+        if (!tracks || tracks === "none") {
+            return 1;
+        }
+
+        return tracks.split(/\s+/).filter(Boolean).length;
+    }
+
     onMount(() => {
-        setColumnInfo();
+        columnCount = getColumnCount();
         setColumns();
-        window.addEventListener("resize", debounce(() => {
-            columns = [];
-            tick().then(() => {
-                setColumnInfo();
+
+        let frame = 0;
+
+        const resizeObserver = new ResizeObserver(() => {
+            cancelAnimationFrame(frame);
+
+            frame = requestAnimationFrame(() => {
+                const nextColumnCount = getColumnCount();
+
+                if (nextColumnCount === columnCount) {
+                    return;
+                }
+
+                columnCount = nextColumnCount;
+
                 setColumns();
             });
-        }, 200));
+        });
 
-        if(browserVersion().mobile) {
+        resizeObserver.observe(listEl);
+
+        if (browserVersion().mobile) {
             urlTarget = "_self";
+        }
+
+        return () => {
+            resizeObserver.disconnect();
+            cancelAnimationFrame(frame);
         }
     });
 </script>
@@ -423,11 +448,13 @@
                 background-color: #fff;
                 border: 1px solid #e4e7ed;
                 color: #555;
-                transition: all .3s ease;
-                &:hover,
-                &:focus {
-                    transform: translateY(-2px);
-                    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+                transition: transform .3s ease, box-shadow .3s ease;
+                @media (hover: hover) {
+                    &:hover,
+                    &:focus {
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+                    }
                 }
                 > img {
                     width: 100%;
@@ -438,7 +465,6 @@
                     transition: none ease 1s;
                     transition-property: border-radius, filter;
                     &:global(.loaded) {
-                        will-change: contents;
                         border-radius: 0;
                         filter: drop-shadow(0 0 1px rgba(0,0,0,.25));
                         background-color: transparent;
